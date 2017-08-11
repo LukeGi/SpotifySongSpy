@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace bluemonster.Forms
 {
-	public partial class OpeningForm : Form
+	public partial class MainForm : Form
 	{
 		Process p;
 
@@ -40,7 +40,7 @@ namespace bluemonster.Forms
 			SongChanged?.Invoke(this, e);
 		}
 
-		public OpeningForm()
+		public MainForm()
 		{
 			InitializeComponent();
 

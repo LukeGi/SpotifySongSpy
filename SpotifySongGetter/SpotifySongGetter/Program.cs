@@ -16,7 +16,7 @@ namespace SpotifySongGetter
 		{
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
-			Application.Run(new bluemonster.Forms.OpeningForm());
+			Application.Run(new bluemonster.Forms.MainForm());
 		}
 	}
 }

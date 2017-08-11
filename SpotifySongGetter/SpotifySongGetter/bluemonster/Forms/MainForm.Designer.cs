@@ -1,6 +1,6 @@
 ﻿namespace bluemonster.Forms
 {
-	partial class OpeningForm
+	partial class MainForm
 	{
 		/// <summary>
 		/// Required designer variable.
@@ -29,7 +29,7 @@
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(OpeningForm));
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
 			this.TrayIcon = new System.Windows.Forms.NotifyIcon(this.components);
 			this.TrayIconMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.TrayIconMenuClose = new System.Windows.Forms.ToolStripMenuItem();
