@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SpotifySongGetter.Properties
+namespace SpotifySongSpy.Properties
 {
 
 

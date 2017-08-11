@@ -33,6 +33,7 @@
 			this.TrayIcon = new System.Windows.Forms.NotifyIcon(this.components);
 			this.TrayIconMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.TrayIconMenuClose = new System.Windows.Forms.ToolStripMenuItem();
+			this.TrayIconMenuOpen = new System.Windows.Forms.ToolStripMenuItem();
 			this.Ticker = new System.Windows.Forms.Timer(this.components);
 			this.label1 = new System.Windows.Forms.Label();
 			this.textBox1 = new System.Windows.Forms.TextBox();
@@ -40,7 +41,6 @@
 			this.label2 = new System.Windows.Forms.Label();
 			this.btnBegin = new System.Windows.Forms.Button();
 			this.btnClose = new System.Windows.Forms.Button();
-			this.TrayIconMenuOpen = new System.Windows.Forms.ToolStripMenuItem();
 			this.TrayIconMenu.SuspendLayout();
 			this.tableLayoutPanel1.SuspendLayout();
 			this.SuspendLayout();
@@ -70,6 +70,13 @@
 			this.TrayIconMenuClose.Size = new System.Drawing.Size(217, 22);
 			this.TrayIconMenuClose.Text = "Close";
 			this.TrayIconMenuClose.Click += new System.EventHandler(this.TrayIconMenuClose_Click);
+			// 
+			// TrayIconMenuOpen
+			// 
+			this.TrayIconMenuOpen.Name = "TrayIconMenuOpen";
+			this.TrayIconMenuOpen.Size = new System.Drawing.Size(217, 22);
+			this.TrayIconMenuOpen.Text = "Change Number Of Spaces";
+			this.TrayIconMenuOpen.Click += new System.EventHandler(this.TrayIconMenuOpen_Click);
 			// 
 			// Ticker
 			// 
@@ -177,14 +184,7 @@
 			this.btnClose.UseVisualStyleBackColor = true;
 			this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
 			// 
-			// TrayIconMenuOpen
-			// 
-			this.TrayIconMenuOpen.Name = "TrayIconMenuOpen";
-			this.TrayIconMenuOpen.Size = new System.Drawing.Size(217, 22);
-			this.TrayIconMenuOpen.Text = "Change Number Of Spaces";
-			this.TrayIconMenuOpen.Click += new System.EventHandler(this.TrayIconMenuOpen_Click);
-			// 
-			// OpeningForm
+			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -193,7 +193,7 @@
 			this.ClientSize = new System.Drawing.Size(584, 361);
 			this.Controls.Add(this.tableLayoutPanel1);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-			this.Name = "OpeningForm";
+			this.Name = "MainForm";
 			this.ShowInTaskbar = false;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "Spotify Song Spy";

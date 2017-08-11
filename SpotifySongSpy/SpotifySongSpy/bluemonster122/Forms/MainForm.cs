@@ -90,7 +90,10 @@ namespace bluemonster.Forms
 
 		private void SaveSong()
 		{
-			string FileName = Environment.CurrentDirectory + @"\spotifySong.txt";
+			string FileName = Application.StartupPath + @"\spotifySong.txt";
+			FileName.Replace(@"\\", @"\");
+			if (!File.Exists(FileName))
+				File.Create(FileName);
 			FileInfo FI = new FileInfo(FileName);
 			string toWrite = "";
 			switch (SongName)
