@@ -73,6 +73,7 @@
 			// 
 			// Ticker
 			// 
+			this.Ticker.Interval = 1000;
 			this.Ticker.Tick += new System.EventHandler(this.TickerTick);
 			// 
 			// label1
