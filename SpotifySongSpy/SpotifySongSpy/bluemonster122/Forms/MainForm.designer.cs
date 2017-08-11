@@ -57,10 +57,10 @@
 			// TrayIconMenu
 			// 
 			this.TrayIconMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.TrayIconMenuClose,
-            this.TrayIconMenuOpen});
+            this.TrayIconMenuOpen,
+            this.TrayIconMenuClose});
 			this.TrayIconMenu.Name = "TrayIconMenu";
-			this.TrayIconMenu.Size = new System.Drawing.Size(218, 48);
+			this.TrayIconMenu.Size = new System.Drawing.Size(218, 70);
 			this.TrayIconMenu.Text = "Options";
 			// 
 			// TrayIconMenuClose

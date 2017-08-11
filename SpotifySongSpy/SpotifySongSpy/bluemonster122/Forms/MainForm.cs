@@ -10,6 +10,7 @@ namespace bluemonster.Forms
 {
 	public partial class MainForm : Form
 	{
+		#region Variables
 		Process p;
 
 		short spaces = 15;
@@ -24,36 +25,29 @@ namespace bluemonster.Forms
 					value == null ?
 					"Spotify is not open" :
 					value;
-				OnSongChanged();
+				SaveFile("spotifySong.txt", GenerateFileText());
 			}
 		}
+		#endregion
 
-		public event EventHandler SongChanged;
-
-		protected void OnSongChanged()
-		{
-			OnSongChanged(new EventArgs());
-		}
-
-		protected void OnSongChanged(EventArgs e)
-		{
-			SongChanged?.Invoke(this, e);
-		}
-
+		#region Constructor
 		public MainForm()
 		{
 			InitializeComponent();
 
-			SongChanged += EventSongChanged;
 			FormClosed += FormClosedEvent;
 
 			TrayIcon.MouseClick += TrayIconClick;
 
 			textBox1.KeyPress += TextBoxKeyPressed;
 
-			SongName = null;
-		}
+			SongName = "Spotify Song Spy is being Initialized";
 
+			InitializeStoragePath(Environment.SpecialFolder.CommonApplicationData);
+		}
+		#endregion
+
+		#region Event Handlers
 		private void TextBoxKeyPressed(object sender, KeyPressEventArgs e)
 		{
 			switch (e.KeyChar)
@@ -80,53 +74,8 @@ namespace bluemonster.Forms
 
 		private void FormClosedEvent(object sender, FormClosedEventArgs e)
 		{
-			SongName = "Open Spotify Song Spy";
 			TrayIcon.Visible = false;
-		}
-
-		private void EventSongChanged(object sender, EventArgs e)
-		{
-			SaveSong();
-		}
-
-		private void SaveSong()
-		{
-			string FileName = FixPath(Application.StartupPath) + @"spotifySong.txt";
-			if (!File.Exists(FileName))
-				File.Create(FileName);
-			FileInfo FI = new FileInfo(FileName);
-			string toWrite = "";
-			switch (SongName)
-			{
-				case "Paused":
-					toWrite += "Spotify is Paused";
-					break;
-				case "Spotify is not open":
-				case "Open Spotify Song Spy":
-					toWrite += SongName;
-					break;
-				default:
-					toWrite += $"Current Song : {SongName}";
-					break;
-			}
-			for (int i = 0; i < spaces; i++)
-				toWrite += ' ';
-			try
-			{
-				if (FI.IsReadOnly)
-					FI.IsReadOnly = false;
-				using (StreamWriter stream = FI.CreateText())
-				{
-					stream.Write(toWrite);
-					stream.Close();
-				}
-				FI.IsReadOnly = true;
-			}
-			catch (Exception E)
-			{
-				MessageBox.Show(E.Message, "Error");
-				MessageBox.Show(E.StackTrace, "Stack Trace");
-			}
+			SongName = "Open Spotify Song Spy";
 		}
 
 		private void TrayIconClick(object sender, MouseEventArgs e)
@@ -148,6 +97,41 @@ namespace bluemonster.Forms
 		}
 
 		private void TickerTick(object sender, EventArgs e)
+		{
+			CheckProcessInfo();
+		}
+
+		private void TrayIconMenuClose_Click(object sender, EventArgs e)
+		{
+			this.Close();
+		}
+
+		private void btnBegin_Click(object sender, EventArgs e)
+		{
+			this.Hide();
+			short.TryParse(textBox1.Text, out spaces);
+			if (Ticker.Enabled)
+				SaveFile("spotifySong.txt", GenerateFileText());
+			else
+			{
+				CheckProcessInfo();
+				Ticker.Start();
+			}
+		}
+
+		private void btnClose_Click(object sender, EventArgs e)
+		{
+			this.Close();
+		}
+
+		private void TrayIconMenuOpen_Click(object sender, EventArgs e)
+		{
+			this.Show();
+		}
+		#endregion
+
+		#region My Methods
+		private void CheckProcessInfo()
 		{
 			p = Process.GetProcessesByName("Spotify").FirstOrDefault(p => !string.IsNullOrWhiteSpace(p.MainWindowTitle));
 			switch (p)
@@ -172,42 +156,87 @@ namespace bluemonster.Forms
 			}
 		}
 
-		private void TrayIconMenuClose_Click(object sender, EventArgs e)
+		private string GenerateFileText()
 		{
-			this.Close();
+			string str = "";
+			switch (SongName)
+			{
+				case "Paused":
+					str += "Spotify is Paused";
+					break;
+				case "Find Out More":
+					str += "Ads are playing";
+					break;
+				case "Spotify is not open":
+				case "Open Spotify Song Spy":
+				case "Spotify Song Spy is being Initialized":
+					str += SongName;
+					break;
+				default:
+					str += $"Current Song : {SongName}";
+					break;
+			}
+			for (int i = 0; i < spaces; i++)
+				str += ' ';
+			return str;
+		} 
+		#endregion
+
+		#region Sharidan's Snippets
+
+		private string mvarStoragePath = "";
+		private string mvarApplicationFolder = "Spotify Song Spy";
+
+		private void InitializeStoragePath()
+		{
+			InitializeStoragePath(Environment.SpecialFolder.CommonApplicationData);
 		}
 
-		private void btnBegin_Click(object sender, EventArgs e)
+		private void InitializeStoragePath(Environment.SpecialFolder specialFolder)
 		{
-			this.Hide();
-			short.TryParse(textBox1.Text, out spaces);
-			if (Ticker.Enabled)
-				SaveSong();
-			else
-				Ticker.Start();
+			string Path = FixPath(Environment.GetFolderPath(specialFolder));
+			Path = FixPath(Path + mvarApplicationFolder);
+			if (!Directory.Exists(Path))
+				try
+				{
+					Directory.CreateDirectory(Path);
+				}
+				catch { }
+			mvarStoragePath = Path;
 		}
 
-		private void btnClose_Click(object sender, EventArgs e)
-		{
-			this.Close();
-		}
-
-		private void TrayIconMenuOpen_Click(object sender, EventArgs e)
-		{
-			this.Show();
-		}
-
-		// Method: FixPath
-		/// <summary>
-		/// Ensures trailing backslash on the passed path.
-		/// </summary>
-		/// <param name="Path">The path to fix.</param>
-		/// <returns>Returns the path with a trailing backslash, if missing.</returns>
 		private string FixPath(string Path)
 		{
 			if (Path[Path.Length - 1] != '\\')
 				return Path + "\\";
 			return Path;
 		}
+
+		private void SaveFile(string FileName, string TextToSave)
+		{
+			if (mvarStoragePath.Length > 0)
+			{
+				if (!Directory.Exists(mvarStoragePath))
+					if (!Directory.Exists(mvarStoragePath))
+						try
+						{
+							Directory.CreateDirectory(mvarStoragePath);
+						}
+						catch { }
+				if (File.Exists(mvarStoragePath + FileName))
+					try
+					{
+						File.Delete(mvarStoragePath + FileName);
+					}
+					catch { }
+				if (!File.Exists(mvarStoragePath + FileName))
+					try
+					{
+						File.WriteAllText(mvarStoragePath + FileName, TextToSave);
+					}
+					catch { }
+			}
+		} 
+		#endregion
 	}
 }
