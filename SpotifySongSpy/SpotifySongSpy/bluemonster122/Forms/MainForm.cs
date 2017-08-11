@@ -81,6 +81,7 @@ namespace bluemonster.Forms
 		private void FormClosedEvent(object sender, FormClosedEventArgs e)
 		{
 			SongName = "Open Spotify Song Spy";
+			TrayIcon.Visible = false;
 		}
 
 		private void EventSongChanged(object sender, EventArgs e)
