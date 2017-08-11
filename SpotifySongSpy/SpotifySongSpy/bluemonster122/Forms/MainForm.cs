@@ -90,8 +90,7 @@ namespace bluemonster.Forms
 
 		private void SaveSong()
 		{
-			string FileName = Application.StartupPath + @"\spotifySong.txt";
-			FileName.Replace(@"\\", @"\");
+			string FileName = FixPath(Application.StartupPath) + @"spotifySong.txt";
 			if (!File.Exists(FileName))
 				File.Create(FileName);
 			FileInfo FI = new FileInfo(FileName);
@@ -195,6 +194,19 @@ namespace bluemonster.Forms
 		private void TrayIconMenuOpen_Click(object sender, EventArgs e)
 		{
 			this.Show();
+		}
+
+		// Method: FixPath
+		/// <summary>
+		/// Ensures trailing backslash on the passed path.
+		/// </summary>
+		/// <param name="Path">The path to fix.</param>
+		/// <returns>Returns the path with a trailing backslash, if missing.</returns>
+		private string FixPath(string Path)
+		{
+			if (Path[Path.Length - 1] != '\\')
+				return Path + "\\";
+			return Path;
 		}
 	}
 }
