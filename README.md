@@ -4,4 +4,4 @@
 
 I wrote this with the intention to use it with OBS Studio to display the song that is currently playing on spotify on my stream.
 
-[![Download Here](http://i.imgur.com/k12sgaF.png)](https://mega.nz/#!NCRHDaqY!LHZyyMetC51zhcnL0V6F1MHbcWzH1BJpR9-E_p52mlI)
+[![Download Here](http://i.imgur.com/JhcXSJw.png)](https://mega.nz/#!NCRHDaqY!LHZyyMetC51zhcnL0V6F1MHbcWzH1BJpR9-E_p52mlI)
